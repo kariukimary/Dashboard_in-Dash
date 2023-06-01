@@ -31,7 +31,7 @@ app.layout=html.Div([html.H1("Web Application Dashboard With Dash",style={'text-
                                   value=1),
         
                 
-            #html.Div(id="output_container",children=[]),
+            
             html.Br(),
             #we put a break so as to have the space between the graph and the divs above
             #the graph below is an empty graph 
@@ -39,7 +39,7 @@ app.layout=html.Div([html.H1("Web Application Dashboard With Dash",style={'text-
                      ])
 #connect the plotly graoh with the dash components using callbacks
 @callback(
-   # [Output(component_id='output_container', component_property='children'),
+  ,
      Output(component_id='my_insurance_map',component_property='figure'),
      Input(component_id='select_number_children',component_property='value'),
 )
@@ -54,24 +54,17 @@ def update_graph(option_select):
     
     dff=df.copy()
     filtered_df=dff[dff.children==option_select]
-    #dff=dff[dff["children"]== option_select]
-    #dff=dff[dff["region"]=='southeast']
+   
     
-    #plotly express
-    #the scope and the locationmode are already defined, for scope it can be africa,europe amomg others and the locationmode can be usa,iso3 etc
-    #fig=px.scatter(
-        #data_frame=dff,
-        #color='charges',
-        #labels={'charges': '% of charges on medical'},
-       # template='plotly_dark',
-        #hover_data=['region','charges'],
-        #color_continuous_scale=px.colors.sequential.YlOrRd,
-        #scope='africa',
-        #locations='bmi',
-        #locationmode='USA-states'
-    #)
-    fig=px.scatter(filtered_df,x="bmi",y="age",size="bmi",color="charges",
-                   hover_name="region",log_x=True,size_max=20)
+    
+    fig=px.scatter(filtered_df,
+                   x="bmi",
+                   y="age",
+                   size="bmi",
+                   color="charges",
+                   hover_name="region",
+                   log_x=True,
+                   size_max=20)
     return fig
 
 if __name__=="__main__":
